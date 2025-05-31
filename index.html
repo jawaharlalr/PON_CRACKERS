@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes">
+  <title>Pon Crackers</title>
+  <style>
+
+  .popup-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4); /* semi-transparent black */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.popup-content {
+  background: #ffffff;  /* white */
+  padding: 30px 40px;
+  border-radius: 8px;
+  color: #000000; /* black */
+  text-align: center;
+  position: relative;
+  max-width: 300px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: #d32f2f; /* red */
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #9a0007; /* darker red */
+}
+
+
+    #map-box {
+  max-width: 900px;
+  margin: 40px auto 60px auto;
+  padding: 30px 20px; /* increased vertical padding */
+  background: rgba(30, 30, 40, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  color: #00ffff;
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#map-box iframe {
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+  transition: transform 0.3s ease;
+  height: 500px; /* increased height */
+}
+
+#map-box iframe:hover {
+  transform: scale(1.03);
+}
+
+  </style>
+  
+  <style>
+    body 
+    
+    html {
+  font-size: 100%; /* Enable scalable base font */
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 1rem; /* Relative font size for scalability */
+  background: linear-gradient(135deg, #ff00cc, #6600ff, #00ffff, #ff0066);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  color: white;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+header {
+  padding: 2.5rem 0; /* Relative padding */
+  text-align: center;
+}
+
+
+    header img.branding {
+  width: 650px;      /* increased from 550px */
+  max-width: 90vw;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+  transition: transform 0.3s ease; /* optional smooth scaling */
+}
+
+/* Optional: add a subtle hover scale effect */
+header img.branding:hover {
+  transform: scale(1.05);
+}
+
+
+header img.shop-logo {
+  width: 250px;
+  max-width: 80vw;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  transition: transform 0.3s ease; /* smooth transition */
+}
+
+header img.shop-logo:hover {
+  transform: scale(1.1); /* slightly enlarge on hover */
+  cursor: pointer;       /* pointer cursor on hover */
+}
+
+
+    
+
+    .section {
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.category {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.category:hover {
+  background: #00ffff;
+  color: black;
+  box-shadow: 0 0 12px #00ffff;
+  transform: scale(1.05);
+}
+
+.category.active {
+  background: #00ffff;
+  color: black;
+  box-shadow: 0 0 15px #00ffff;
+}
+
+.products {
+  max-width: 900px;
+  margin: 0 auto 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+
+.product {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 255, 255, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 24px rgba(0, 255, 255, 0.4);
+}
+
+.product-image {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  margin-bottom: 10px;
+}
+
+.product-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.product-details {
+  text-align: left;
+  margin-bottom: 15px;
+  padding: 0 10px; /* added padding for better spacing */
+}
+
+.product-name {
+  font-weight: 700;
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.product-desc {
+  font-size: 0.9em;
+  color: #c0f0ffcc;
+  margin-bottom: 12px;
+  min-height: 42px; /* space for description */
+}
+
+.product-price {
+  font-size: 1.1em;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #00ffff;
+}
+
+.product-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 10px; /* spacing around actions */
+}
+
+.qty-controls {
+  display: flex;
+  align-items: center;
+  background: #111;
+  border-radius: 8px;
+  overflow: hidden;
+  user-select: none;
+  border: 1px solid #00ffff;
+}
+
+.qty-controls button {
+  background-color: #00ffff;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.qty-controls button:hover {
+  background-color: #00cccc;
+}
+
+.qty-controls input {
+  width: 45px;
+  text-align: center;
+  border: none;
+  background: #222;
+  color: white;
+  font-weight: bold;
+  pointer-events: none;
+  user-select: none;
+  font-size: 1em;
+}
+
+.product-actions button.add-to-cart {
+  padding: 10px 16px;
+  background-color: #00ffff;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+  outline: none;
+}
+/* Optional but helpful for smoother scaling */
+img.fly-img {
+  border-radius: 10px;
+  pointer-events: none;
+  z-index: 9999;
+  position: fixed;
+  width: 60px;
+  height: auto;
+  object-fit: contain;
+}
+
+
+/* ✅ State when item is added to cart */
+.product-actions button.add-to-cart.added {
+  background-color: #28a745; /* Green */
+  color: white;
+}
+
+/* ✅ Hover effect for default state (not added) */
+.product-actions button.add-to-cart:hover:not(.added) {
+  background-color: #00cccc;
+  transform: scale(1.03); /* Slight bounce on hover */
+}
+
+/* ✅ Hover effect when item is already added */
+.product-actions button.add-to-cart.added:hover {
+  background-color: #218838; /* Darker green */
+  transform: scale(1.05); /* Slightly larger scale */
+}
+
+/* ✅ Smooth disabled state */
+.product-actions button.add-to-cart:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+
+
+#fireworks-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1; /* Behind everything */
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+
+
+   /* Cart modal overlay and content */
+/* Cart Modal Container */
+#cart-modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  overflow-y: auto;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* Show Class for Modal */
+#cart-modal.show {
+  display: block;
+}
+
+/* Cart Content Styling */
+#cart {
+  max-width: 800px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px 30px 30px 30px;
+  border-radius: 10px;
+  color: white;
+  position: relative;
+  box-shadow: 0 0 15px #00ffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#cart h3 {
+  margin-top: 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.8em;
+  color: #00ffff;
+}
+
+/* Floating Cart Button */
+#cart-fab {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background-color: #ff4081;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 9999;
+  transition: background-color 0.3s ease;
+}
+
+#cart-fab:hover {
+  background-color: #e91e63;
+}
+
+/* Badge for item count */
+#cart-count {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: yellow;
+  color: black;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+.cart-item-image {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  margin-right: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 6px #00ffff88;
+}
+
+.cart-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Updated cart items list */
+#cart-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* Each cart item as flex container */
+#cart-items li {
+  background: rgba(0,0,0,0.4);
+  margin-bottom: 10px;
+  padding: 12px 15px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  color: white;
+  gap: 12px;
+}
+
+/* Numbering for each cart item */
+.cart-item-number {
+  flex-shrink: 0;
+  width: 28px;
+  font-weight: 800;
+  font-size: 1.2em;
+  color: #00ffff;
+  text-align: right;
+  user-select: none;
+}
+
+
+/* Info container grows */
+.cart-item-info {
+  flex-grow: 1;
+  text-align: left;
+}
+
+
+
+.cart-item-name {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 4px;
+}
+
+.cart-item-qty-controls {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.cart-item-qty-controls button {
+  background-color: #00ffff;
+  border: none;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 6px;
+  color: black;
+  margin: 0 5px;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+.cart-item-qty-controls button:hover {
+  background-color: #00cccc;
+}
+
+.cart-item-qty-controls span {
+  min-width: 28px;
+  text-align: center;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.cart-item-price {
+  min-width: 100px;
+  text-align: right;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+/* Remove button */
+.cart-item-remove {
+  cursor: pointer;
+  color: #ff4444;
+  font-weight: bold;
+  margin-left: 10px;
+  border: none;
+  background: none;
+  font-size: 1.4em;
+  line-height: 1;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.cart-item-remove:hover {
+  color: #ff0000;
+}
+
+/* Total price */
+#cart-total {
+  font-weight: 800;
+  font-size: 1.4em;
+  text-align: right;
+  margin-bottom: 20px;
+  color: #00ffff;
+}
+
+/* Checkout section with centered button */
+#checkout-section {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Proceed to Checkout button */
+#checkout-btn {
+  background: #00ffff;
+  color: black;
+  font-weight: 800;
+  font-size: 1.3em;
+  padding: 14px 45px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.5);
+  transition: background-color 0.3s ease;
+  user-select: none;
+  max-width: 280px;
+}
+
+#checkout-btn:hover {
+  background: #00cccc;
+}
+
+/* Place order form */
+#user-form {
+  display: none;
+  margin-top: 25px;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  background: rgba(0,0,0,0.35);
+  padding: 25px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 255, 255, 0.35);
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#user-form h4 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 800;
+  font-size: 1.5em;
+  color: #00ffff;
+}
+
+#user-form input {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0 20px 0;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.05em;
+  box-sizing: border-box;
+  background: #111;
+  color: white;
+  transition: border 0.3s ease;
+  border: 2px solid transparent;
+}
+
+#user-form input:focus {
+  outline: none;
+  border-color: #00ffff;
+  background: #222;
+}
+
+#place-order-btn {
+  background: #00ffff;
+  color: black;
+  font-weight: 800;
+  font-size: 1.3em;
+  padding: 14px 45px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.5);
+  transition: background-color 0.3s ease;
+  user-select: none;
+  max-width: 280px;
+}
+
+
+#place-order-btn:hover {
+  background-color: #e65c00; /* slightly darker on hover */
+}
+
+
+/* Floating cart button */
+#cart-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  z-index: 9999;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  transition: transform 0.3s ease; /* Smooth zoom animation */
+}
+
+#cart-toggle-btn:hover {
+  background: linear-gradient(135deg, #005fff, #00f5ff);
+  box-shadow: 0 12px 20px rgba(0, 95, 255, 0.6);
+  transform: translateY(-3px) scale(1.05); /* slight hover scale */
+}
+
+#cart-toggle-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: white;
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  top: 12px;
+  transition: transform 0.3s ease; /* optional icon zoom */
+}
+
+#cart-toggle-btn.zoom {
+  transform: scale(1.3); /* zoomed state */
+}
+
+#cart-count-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #ff3b3b;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(255, 59, 59, 0.5);
+  line-height: 18px;
+  pointer-events: none;
+}
+
+
+
+
+/* Close button inside modal */
+#cart-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #ff4444;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2em;
+  cursor: pointer;
+  user-select: none;
+  line-height: 30px;
+  text-align: center;
+  padding: 0;
+  transition: background-color 0.3s ease;
+}
+
+#cart-close-btn:hover {
+  background-color: #cc0000;
+}
+
+
+#order-wait-popup {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 1.3rem;
+  font-family: Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  white-space: pre-line; /* preserves line breaks in popup text */
+  padding: 20px;
+  text-align: center;
+  user-select: none;
+  /* smooth fade-in */
+  transition: opacity 0.3s ease;
+  opacity: 1;
+}
+
+
+  </style>
+    <!-- Include jsPDF script in <head> or before </body> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</head>
+<body>
+  <canvas id="fireworks-canvas"></canvas>
+<header>
+  <img src="static/images/Standard_fireworks.png" alt="Standard Fireworks Logo" class="branding" />
+  <img src="static/images/pon-crackers.png" alt="Pon Crackers Shop Logo" class="shop-logo" />
+</header>
+<style>
+#order-wait-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.popup-backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.popup-content {
+  position: relative;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 12px;
+  text-align: center;
+  z-index: 10001;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.loader {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #555;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+
+<style>
+  #shop-header {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    color: #ddd; /* dark white / light gray */
+    cursor: default;
+    transition: color 0.3s ease;
+  }
+
+  #shop-header:hover {
+    color: #fff; /* bright white on hover */
+  }
+
+  #shop-header h2 {
+    margin: 0;
+    font-weight: bold;
+  }
+
+  #shop-header p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+</style>
+
+<!-- Price List Popup -->
+<div id="price-list-popup" class="popup-overlay" style="display:none;">
+  <div class="popup-content" style="position: relative; padding: 20px; background: white; border-radius: 8px; max-width: 300px; text-align: center;">
+    <button id="close-popup" class="close-btn" aria-label="Close Price List Popup" 
+      style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 24px; cursor: pointer;">
+      &times;
+    </button>
+    <p style="font-size: 18px; font-weight: 600; margin: 40px 0 20px;">
+      Price List 2025
+    </p>
+  </div>
+</div>
+
+
+<div style="position: absolute; top: 20px; right: 20px;">
+  <a href="/static/document.pdf" target="_blank" rel="noopener noreferrer">
+    <button style="
+      background-color: transparent;
+      color: #007bff;
+      padding: 6px 12px;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid #007bff;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
+    " onmouseover="this.style.backgroundColor='#007bff'; this.style.color='white';"
+       onmouseout="this.style.backgroundColor='transparent'; this.style.color='#007bff';">
+      Download PriceList
+    </button>
+  </a>
+</div>
+
+
+
+<div id="shop-header">
+  <h2>Pon Crackers Shop</h2>
+  <p>
+    136, Velachery Rd, MGR Nagar,<br />
+    Pallikaranai, Chennai, Tamil Nadu 600100
+  </p>
+</div>
+
+
+<div class="section">
+  <h2>Product Categories</h2>
+  <div class="categories" id="category-container">
+    <div class="category active" onclick="filterCategory('all', event)">All</div>
+    <div class="category" onclick="filterCategory('sparklers', event)">Sparklers</div>
+    <div class="category" onclick="filterCategory('Ground Chakkars', event)">Ground Chakkars</div>
+    <div class="category" onclick="filterCategory('flower', event)">Flower Pots</div>
+    <div class="category" onclick="filterCategory('fancy', event)">Fancy Items</div>
+    <div class="category" onclick="filterCategory('novel fireworks', event)">Novel Fireworks</div>
+    <div class="category" onclick="filterCategory('sound crackers', event)">Sound Crackers</div>
+    <div class="category" onclick="filterCategory('bijili', event)">Bijili</div>
+    <div class="category" onclick="filterCategory('bomb', event)">Bomb</div>
+    <div class="category" onclick="filterCategory('redfort crackers', event)">Redfort Crackers</div>
+    <div class="category" onclick="filterCategory('rockets', event)">Rockets</div>
+    <div class="category" onclick="filterCategory('colour smoke', event)">Colour Smoke</div>
+    <div class="category" onclick="filterCategory('rockets', event)">Rockets</div>
+    <div class="category" onclick="filterCategory('rockets', event)">Rockets</div>
+  </div>
+
+  <h2>Available Products</h2>
+  <div class="products" id="product-list">
+    <!-- Products will be populated by JavaScript -->
+  </div>
+
+  <button id="cart-toggle-btn" aria-label="Toggle cart" aria-expanded="false" onclick="toggleCart()">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M7 18c-1.104 0-1.99.896-1.99 2S5.896 22 7 22s2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-1.99.896-1.99 2s.886 2 1.99 2 2-.896 2-2-.896-2-2-2zM7.824 14l.564-1.5h7.33c.743 0 1.38-.448 1.607-1.1l2.928-7.44-1.927-.76-2.317 6.048H8.484l-.24-.6-1.8-4.5H2v2h3.6l3.1 7.75-.876 2.33H20v-2H7.824z"/>
+  </svg>
+  <span id="cart-count-badge">0</span>
+</button>
+
+
+
+  <!-- Cart modal wrapper -->
+  <div id="cart-modal" role="dialog" aria-modal="true" aria-labelledby="cart-title" tabindex="-1" >
+    <div id="cart">
+      <button id="cart-close-btn" aria-label="Close cart" onclick="toggleCart()">×</button>
+      <h3 id="cart-title">Cart</h3>
+      <ul id="cart-items"></ul>
+      <div id="cart-total">Total: ₹0</div>
+      <div id="checkout-section">
+        <button id="checkout-btn" class="btn-advanced" onclick="showCheckout()">
+        <span class="icon"></span> Proceed to Checkout
+      </div>
+
+      <div id="user-form">
+        <h3>Place Order</h3>
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="tel" id="phone" placeholder="Phone Number" required>
+        <input type="text" id="address" placeholder="Address" required>
+        <button id="place-order-btn" class="btn-advanced" onclick="placeOrder()">
+          <span class="icon"></span> Place Order
+      </div>
+    </div>
+  </div>
+
+</div>
+<style>
+  .floating-buttons {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1000;
+  }
+
+  .floating-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #25d366; /* WhatsApp green */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+  }
+
+  .floating-btn.call {
+    background-color: #34b7f1; /* blue for call */
+  }
+
+  .floating-btn:hover {
+    background-color: #128c7e;
+    transform: scale(1.1);
+  }
+
+  .floating-btn.call:hover {
+    background-color: #0b81d7;
+  }
+
+  .floating-btn svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+  }
+</style>
+
+<div class="floating-buttons">
+  <!-- Call button -->
+  <a href="tel:+919884609789" class="floating-btn call" aria-label="Call Pon Crackers Shop">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27 11.36 11.36 0 003.55.57 1 1 0 011 1v3.44a1 1 0 01-1 1A16 16 0 014 6a1 1 0 011-1h3.44a1 1 0 011 1 11.36 11.36 0 00.57 3.55 1 1 0 01-.27 1.11z"/>
+    </svg>
+  </a>
+
+  <!-- WhatsApp button -->
+  <!-- WhatsApp Button -->
+<!-- WhatsApp Button with Message Icon -->
+<a href="https://wa.me/919884609789" target="_blank" rel="noopener" class="floating-btn" aria-label="WhatsApp Pon Crackers Shop">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" 
+    xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/>
+  </svg>
+</a>
+
+
+</div>
+
+<!-- Order Wait Popup -->
+<div id="order-wait-popup" style="display:none;">
+  <div id="order-popup-text">Placing your order... Please wait.</div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+
+<script>
+window.addEventListener('DOMContentLoaded', () => {
+  const popup = document.getElementById('price-list-popup');
+  const closeBtn = document.getElementById('close-popup');
+
+  // Show popup when the page loads
+  if (popup) {
+    popup.style.display = 'flex';
+  }
+
+  // Close popup when clicking the close button
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+  }
+});
+
+</script>
+
+<script>
+  const canvas = document.getElementById("fireworks-canvas");
+  const ctx = canvas.getContext("2d");
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas();
+
+  let fireworks = [];
+  let particles = [];
+
+  class Firework {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height;
+      this.targetY = Math.random() * canvas.height * 0.9;
+      this.speed = 4 + Math.random() * 2;
+      this.color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+      this.style = ['round', 'star', 'glitter'][Math.floor(Math.random() * 3)];
+    }
+
+    update() {
+      this.y -= this.speed;
+      if (this.y <= this.targetY) {
+        this.explode();
+        return true;
+      }
+      this.draw();
+      return false;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.fill();
+    }
+
+    explode() {
+      const count = 50 + Math.floor(Math.random() * 50);
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle(this.x, this.y, this.color, this.style));
+      }
+    }
+  }
+
+  class Particle {
+    constructor(x, y, color, style) {
+      this.x = x;
+      this.y = y;
+      this.radius = 1 + Math.random() * 2;
+      this.speed = Math.random() * 4 + 1;
+      this.angle = style === 'star'
+        ? (Math.PI * 2 / 5) * (Math.floor(Math.random() * 5))
+        : Math.random() * Math.PI * 2;
+      this.gravity = 0.4;
+      this.friction = 0.96;
+      this.color = color;
+      this.alpha = 1;
+      this.style = style;
+    }
+
+    update() {
+      this.x += Math.cos(this.angle) * this.speed;
+      this.y += Math.sin(this.angle) * this.speed + this.gravity;
+      this.speed *= this.friction;
+      this.alpha -= 0.015;
+      this.draw();
+      return this.alpha <= 0;
+    }
+
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      if (this.style === 'glitter') {
+        ctx.fillStyle = Math.random() > 0.5 ? this.color : "#fff";
+      } else {
+        ctx.fillStyle = this.color;
+      }
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  function animate() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.15)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (Math.random() < 0.1500) { // Reduced density
+      fireworks.push(new Firework());
+    }
+
+    fireworks = fireworks.filter(f => !f.update());
+    particles = particles.filter(p => !p.update());
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+</script>
+
+  
+
+<script>
+  const products = [
+ 
+  { name: "BOBY GOLD SPARKLERS 7CM (10pcs) 1 Box", price: 25, category: "sparklers", image: "/static/images/boobygold70cm.png"},
+  { name: "BOBBY CRACKLINGS SPARKLERS 7CM(10PCS) 1 Box", price: 25, category: "sparklers", image: "/static/images/booby-crackling-7cm.png"},
+  { name: "12CM 4 COLOUR SPARKLERS (10PCS) 1 Box", price: 50, category: "sparklers", image: "/static/images/12cm4colour.jpg"},
+  { name: "GOLD SPARKLERS 15CM(10PCS) 1 Box", price: 75, category: "sparklers", image: "/static/images/15cmgold.jpg"},
+  { name: "GOLD SPARKLERS 30CM(5PCS) 1 Box", price: 75, category: "sparklers", image: "/static/images/potred.jpg"},
+  { name: "RED SPARKLERS 15CM(10PCS) 1 Box", price: 80, category: "sparklers", image: "/static/images/potstricolour.jpg"},
+  { name: "LEMON TREE SPARKLERS 15CM(10PCS) 1 Box", price: 80, category: "sparklers", image: "/static/images/potsworlds.jpg"},
+  { name: "CRACKLING SPARKLERS 15CM(10PCS) 1 Box", price: 85, category: "sparklers", image: "/static/images/potcrackling.jpg"},
+  { name: "CRACKLING SPARKLERS 30CM(5PCS) 1 Box", price: 85, category: "sparklers", image: "//static/images/pottricolour.jpg"},
+  { name: "LAVENDER SPARKLERS 15CM(10PCS) 1 Box", price: 110, category: "sparklers", image: "/static/images/booby-crackling-7cm.png"},
+
+  { name: "THE GREAT SPLENDOUR FOUNTAIN (1PC) 1 Box", price: 15, category: "flower", image: "images/flowerpot_red.jpg" },
+  { name: "FLOWERPOT SMALL(10PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_green.jpg" },
+  { name: "FLOWERPOTS BIG(10PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_yellow.jpg" },
+  { name: "FLOWERPOTS SPECIAL (10PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_red.jpg" },
+  { name: "CHEERS FOUNTAIN (3PCS)	 1 Box", price: 15, category: "flower", image: "images/flowerpot_green.jpg" },
+  { name: "FLOWERPOTS DELUXE (5PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_yellow.jpg" },
+  { name: "JADE FLOWERS FOUNTAIN(5PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_red.jpg" },
+  { name: "HAPPINESS FOUNTAIN (5PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_green.jpg" },
+  { name: "JEWEL POTS FOUNTAIN (5PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_yellow.jpg" },
+  { name: "FLOWERPOTS GIANT (10PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_red.jpg" },
+  { name: "COLOR FOUNTAINS (4PCS)	 1 Box", price: 15, category: "flower", image: "images/flowerpot_green.jpg" },
+  { name: "Tricolour FOUNTAIN (5PCS)	 1 Box", price: 15, category: "flower", image: "images/flowerpot_yellow.jpg" },
+  { name: "CRACKLING KING FOUNTAIN (5PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_red.jpg" },
+  { name: "FLOWERPOTS COLOUR WORLD (10PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_green.jpg" },
+  { name: "TRICOLOUR MILLENNIUM (5pcs) 1 Box", price: 15, category: "flower", image: "images/flowerpot_yellow.jpg" },
+  { name: "RED CINDERELLA (5PCS) 1 Box", price: 15, category: "flower", image: "images/flowerpot_red.jpg" },
+  
+  { name: "ZAMIN CHAKKARS BIG(10PCS) 1 Box", price: 20, category: "Ground Chakkars", image: "images/chakkar1.jpg" },
+  { name: "ZAMIN CHAKKARS ASOKA (10PCS) 1 Box", price: 25, category: "Ground Chakkars", image: "images/chakkar2.jpg" },
+  { name: "TWIN SPIN WHEEL (5PCS)	 1 Box", price: 30, category: "Ground Chakkars", image: "images/chakkar3.jpg" },
+  { name: "SCARLET SAUCER(5PCS)	 1 Box", price: 20, category: "Ground Chakkars", image: "images/chakkar1.jpg" },
+  { name: "WHIZZ WHEEL (5PCS) 1 Box", price: 25, category: "Ground Chakkars", image: "images/chakkar2.jpg" },
+  { name: "ZAMIN CHAKKARS SPECIAL (10PCS) 1 Box", price: 20, category: "Ground Chakkars", image: "images/chakkar1.jpg" },
+  { name: "MEGA TWISTER WHEEL(5PCS) 1 Box", price: 25, category: "Ground Chakkars", image: "images/chakkar2.jpg" },
+  { name: "ZAMIN CHAKKARS DELUXE (10PCS) 1 Box", price: 20, category: "Ground Chakkars", image: "images/chakkar1.jpg" },
+  { name: "SCARY SCREAM(4PCS) 1 Box", price: 25, category: "Ground Chakkars", image: "images/chakkar2.jpg" },
+  { name: "ZAMIN CHAKKARS SUPER DELUXE (10PCS) 1 Box", price: 20, category: "Ground Chakkars", image: "images/chakkar1.jpg" },
+  { name: "POKER WHEEL (5PCS)	 1 Box", price: 25, category: "Ground Chakkars", image: "images/chakkar2.jpg" },
+  { name: "CUCKOO WHEEL (5PCS)	 1 Box", price: 20, category: "Ground Chakkars", image: "images/chakkar1.jpg" },
+  { name: "DOLLAR WHEEL(5PCS)		 1 Box", price: 25, category: "Ground Chakkars", image: "images/chakkar2.jpg" },
+
+  { name: "TWINKLING STAR 45CM(10PCS)		 1 Box", price: 25, category: "novel fireworks", image: "images/chakkar2.jpg" },
+  { name: "FIRE PENCILS (10PCS)			 1 Box", price: 25, category: "novel fireworks", image: "images/chakkar2.jpg" },
+  { name: "MAGNETIC TORCHES (10PCS)		 1 Box", price: 25, category: "novel fireworks", image: "images/chakkar2.jpg" },
+  { name: "SILVER TWINKLINGS 60CM(10PCS)		 1 Box", price: 25, category: "novel fireworks", image: "images/chakkar2.jpg" },
+  { name: "MULTI COLOUR CANDLES (10PCS)		 1 Box", price: 25, category: "novel fireworks", image: "images/chakkar2.jpg" },
+  { name: "SILVER TWINKLINGS 120CM(10PCS)		 1 Box", price: 25, category: "novel fireworks", image: "images/chakkar2.jpg" },
+  { name: "4 COLOUR TORCHES (10PCS)		 1 Box", price: 25, category: "novel fireworks", image: "images/chakkar2.jpg" },
+
+  { name: "SPARROW6.5CM(5PCS)	 1 Pkt", price: 40, category: "sound crackers", image: "images/fancy_star.jpg" },
+  { name: "10CM LAKSHMI (5PCS) 1 Pkt", price: 40, category: "sound crackers", image: "images/fancy_star.jpg" },
+  { name: "10CM KRISHNA (5PCS)	 1 Pkt", price: 40, category: "sound crackers", image: "images/fancy_star.jpg" },
+  { name: "10CM HITLER (5PCS)	1 Pkt", price: 40, category: "sound crackers", image: "images/fancy_star.jpg" },
+  { name: "10CM HERCULES DELUXE(5PCS) 1 Pkt", price: 40, category: "sound crackers", image: "images/fancy_star.jpg" },
+  { name: "TWO SOUND GIANT (5PCS)	 1 Pkt", price: 40, category: "sound crackers", image: "images/fancy_star.jpg" },
+  
+  { name: "BIJILI RED(50PCS)	 1 Pkt", price: 40, category: "bijili", image: "images/fancy_star.jpg" },
+  { name: "RED BIJILI (100PCS)		 1 Pkt", price: 40, category: "bijili", image: "images/fancy_star.jpg" },
+  { name: "GIANT BIJILI (50PCS)		 1 Pkt", price: 40, category: "bijili", image: "images/fancy_star.jpg" },
+
+  { name: "BULLET BOMBS (10PCS) 1 Box", price: 25, category: "bomb", image: "images/chakkar2.jpg" },
+  { name: "COLOUR FLASH (5PCS) 1 Box", price: 25, category: "bomb", image: "images/chakkar2.jpg" },
+  { name: "THUNDER BOMB (10PCS) 1 Box", price: 25, category: "bomb", image: "images/chakkar2.jpg" },
+  { name: "KARGIL BULLET (10PCS)	 1 Box", price: 25, category: "bomb", image: "images/chakkar2.jpg" },
+  { name: "FANTASTIC SSS BOMB (6PCS) 1 Box", price: 25, category: "bomb", image: "images/chakkar2.jpg" },
+  { name: "BOOM (10PCS) 1 Box", price: 25, category: "bomb", image: "images/chakkar2.jpg" },
+
+  { name: "100mm MAGIC CRACKERS 1 Box", price: 25, category: "redfort crackers", image: "images/chakkar2.jpg" },
+  { name: "1000mm MAGIC CRACKERS	 1 Box", price: 25, category: "redfort crackers", image: "images/chakkar2.jpg" },
+  { name: "2000mm MAGIC CRACKERS 1 Box", price: 25, category: "redfort crackers", image: "images/chakkar2.jpg" },
+  { name: "5000mm MAGIC CRACKERS	 1 Box", price: 25, category: "redfort crackers", image: "images/chakkar2.jpg" },
+  { name: "10000mm MAGIC CRACKERS 1 Box", price: 25, category: "redfort crackers", image: "images/chakkar2.jpg" },
+
+  { name: "SURVEYOR ROCKETS(10PCS) 1 Box", price: 35, category: "rockets", image: "images/rocket_small.jpg" },
+  { name: "RAINBOW ROCKETS (10PCS)	 1 Box", price: 35, category: "rockets", image: "images/rocket_small.jpg" },
+  { name: "BOMB ROCKET(10PCS) 1 Box", price: 35, category: "rockets", image: "images/rocket_small.jpg" },
+  { name: "ROHINI ROCKETS (10PCS)	 1 Box", price: 35, category: "rockets", image: "images/rocket_small.jpg" },
+  { name: "SILVER JET ROCKETS ((10PCS) 1 Box", price: 35, category: "rockets", image: "images/rocket_small.jpg" },
+  { name: "PARACHUTE ROCKETS (5PCS) 1 Box", price: 35, category: "rockets", image: "images/rocket_small.jpg" },
+
+  { name: "RAINBOW FOG(2PCS) 1 Box", price: 35, category: "colour smoke", image: "images/rocket_small.jpg" },
+  { name: "OLYMPIC TORCH(1PC) 1 Box", price: 35, category: "colour smoke", image: "images/rocket_small.jpg" },
+  { name: "VIBGYOR(1pc) 1 Box", price: 35, category: "colour smoke", image: "images/rocket_small.jpg" },
+  { name: "RAINBOW FOG (5PCS) 1 Box", price: 35, category: "colour smoke", image: "images/rocket_small.jpg" },
+  { name: "LITTLE DRAGON (5PCS) 1 Box", price: 35, category: "colour smoke", image: "images/rocket_small.jpg" },
+  
+  
+  
+  
+  
+  
+  { name: "Fancy Item - Star", price: 40, category: "fancy", image: "images/fancy_star.jpg" },
+  { name: "Fancy Item - Dragon", price: 50, category: "fancy", image: "images/fancy_dragon.jpg" },
+  
+];
+
+
+  let cart = [];
+
+function renderProducts(category = 'all') {
+  const container = document.getElementById('product-list');
+  container.innerHTML = '';
+
+  const filtered = category === 'all'
+    ? products
+    : products.filter(p => p.category === category);
+
+  filtered.forEach((product, index) => {
+    const productDiv = document.createElement('div');
+    productDiv.className = 'product';
+
+    productDiv.innerHTML = `
+  <div class="product-image">
+    <img src="${product.image}" alt="${product.name}" loading="lazy" />
+  </div>
+  <div class="product-details">
+    <div class="product-name">${product.name}</div>
+    <div class="product-price">₹${product.price}</div>
+  </div>
+  <div class="product-actions">
+    <div class="qty-controls" aria-label="Quantity selector for ${product.name}">
+      <button aria-label="Decrease quantity" onclick="decrementQty(${index})">−</button>
+      <input id="qty-${index}" type="text" value="1" readonly />
+      <button aria-label="Increase quantity" onclick="incrementQty(${index})">+</button>
+    </div>
+    <button id="add-btn-${index}" class="add-to-cart-btn add-to-cart" aria-label="Add ${product.name} to cart" onclick="addToCart(${index})">Add to Cart</button>
+  </div>
+`;
+
+
+    container.appendChild(productDiv);
+  });
+}
+
+function filterCategory(cat, event) {
+  if (event) {
+    document.querySelectorAll('.category').forEach(el => el.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+  renderProducts(cat);
+
+  // Scroll page to the top of the product list
+  const productList = document.getElementById('product-list');
+  if (productList) {
+    const offsetTop = productList.offsetTop;
+    window.scrollTo({
+      top: offsetTop - 10, // Optional padding
+      behavior: 'smooth'
+    });
+  }
+}
+
+
+function incrementQty(index) {
+  const input = document.getElementById(`qty-${index}`);
+  let val = parseInt(input.value);
+  input.value = val + 1;
+}
+
+function decrementQty(index) {
+  const input = document.getElementById(`qty-${index}`);
+  let val = parseInt(input.value);
+  if (val > 1) input.value = val - 1;
+}
+
+function addToCart(index) {
+  const qty = parseInt(document.getElementById(`qty-${index}`).value);
+  const product = products[index];
+
+  const existingIndex = cart.findIndex(item => item.name === product.name);
+  if (existingIndex >= 0) {
+    cart[existingIndex].qty += qty;
+  } else {
+    cart.push({ ...product, qty, index }); // Store original index
+  }
+
+  updateCart();
+
+  // Fly to cart animation
+  const productElem = document.querySelectorAll('.product')[index];
+  const img = productElem?.querySelector('img');
+  const cartIcon = document.getElementById('cart-toggle-btn');
+
+  if (img && cartIcon) {
+    const imgClone = img.cloneNode(true);
+    const rect = img.getBoundingClientRect();
+    const cartRect = cartIcon.getBoundingClientRect();
+
+    imgClone.style.position = 'fixed';
+    imgClone.style.left = rect.left + 'px';
+    imgClone.style.top = rect.top + 'px';
+    imgClone.style.width = rect.width + 'px';
+    imgClone.style.height = rect.height + 'px';
+    imgClone.style.transition = 'all 1.6s cubic-bezier(0.4, 0, 0.2, 1)';
+    imgClone.style.zIndex = 1000;
+    imgClone.style.borderRadius = '12px';
+    imgClone.style.pointerEvents = 'none';
+
+    document.body.appendChild(imgClone);
+
+    setTimeout(() => {
+      imgClone.style.left = cartRect.left + 'px';
+      imgClone.style.top = cartRect.top + 'px';
+      imgClone.style.width = '20px';
+      imgClone.style.height = '20px';
+      imgClone.style.opacity = 0;
+    }, 50);
+
+    setTimeout(() => {
+      imgClone.remove();
+    }, 850);
+
+    // ✅ Zoom in/out cart icon
+    cartIcon.style.transition = 'transform 0.3s ease';
+    cartIcon.style.transform = 'scale(1.3)';
+    setTimeout(() => {
+      cartIcon.style.transform = 'scale(1)';
+    }, 300);
+  }
+
+  // ✅ Animate the Add to Cart button
+  const addBtn = document.getElementById(`add-btn-${index}`);
+  if (addBtn) {
+    addBtn.innerHTML = '✅ Added';
+    addBtn.classList.add('added');
+    addBtn.disabled = true;
+  }
+}
+
+
+function updateCart() {
+  const cartItems = document.getElementById('cart-items');
+  cartItems.innerHTML = '';
+
+  if (cart.length === 0) {
+    cartItems.innerHTML = '<li>Your cart is empty</li>';
+    document.getElementById('cart-total').textContent = 'Total: ₹0';
+    document.getElementById('checkout-section').style.display = 'none';
+    document.getElementById('user-form').style.display = 'none';
+    updateCartCountBadge();
+
+    // ✅ Reset all Add to Cart buttons if cart is completely empty
+    document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+      btn.innerHTML = 'Add to Cart';
+      btn.classList.remove('added');
+      btn.disabled = false;
+    });
+
+    return;
+  }
+
+  let total = 0;
+  cart.forEach((item, i) => {
+    total += item.price * item.qty;
+
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <div class="cart-item-image">
+        <img src="${item.image}" alt="${item.name}" />
+      </div>
+      <div class="cart-item-info">
+        <span class="cart-item-name">${item.name}</span>
+      </div>
+      <div class="cart-item-qty-controls">
+        <button aria-label="Decrease quantity" onclick="decrementCartQty(${i})">-</button>
+        <span>${item.qty}</span>
+        <button aria-label="Increase quantity" onclick="incrementCartQty(${i})">+</button>
+      </div>
+      <div class="cart-item-price">₹${item.price * item.qty}</div>
+      <button aria-label="Remove item" class="cart-item-remove" onclick="removeCartItem(${i})">&times;</button>
+    `;
+    cartItems.appendChild(li);
+  });
+
+  document.getElementById('cart-total').textContent = `Total: ₹${total}`;
+  document.getElementById('checkout-section').style.display = 'block';
+
+  updateCartCountBadge();
+}
+
+function updateCartCountBadge() {
+  const badge = document.getElementById("cart-count-badge");
+  let totalCount = 0;
+  cart.forEach(item => {
+    totalCount += item.qty;
+  });
+  badge.textContent = totalCount;
+}
+
+function incrementCartQty(i) {
+  cart[i].qty++;
+  updateCart();
+}
+
+function decrementCartQty(i) {
+  if (cart[i].qty > 1) {
+    cart[i].qty--;
+  } else {
+    removeCartItem(i);
+  }
+  updateCart();
+}
+
+function removeCartItem(i) {
+  const removed = cart.splice(i, 1)[0];
+  updateCart();
+
+  // ✅ Reset corresponding Add to Cart button
+  if (removed && removed.index !== undefined) {
+    const resetBtn = document.getElementById(`add-btn-${removed.index}`);
+    if (resetBtn) {
+      resetBtn.innerHTML = 'Add to Cart';
+      resetBtn.classList.remove('added');
+      resetBtn.disabled = false;
+    }
+  }
+}
+
+function showCheckout() {
+  if (cart.length === 0) {
+    alert("Your cart is empty.");
+    return;
+  }
+  document.getElementById('user-form').style.display = 'block';
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+
+
+
+async function placeOrder() {
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const address = document.getElementById('address').value.trim();
+
+  if (!name || !phone || !address) {
+    alert("Please fill all details.");
+    return;
+  }
+  if (!cart || cart.length === 0) {
+    alert("Your cart is empty.");
+    return;
+  }
+
+  const popup = document.getElementById("order-wait-popup");
+  const popupText = document.getElementById("order-popup-text");
+
+  popup.style.display = "flex";
+  popupText.innerHTML = `⏳ Placing your order...<br>தயவு செய்து காத்திருக்கவும்...<br>WhatsApp-க்கு வழிமாற்றம் செய்யப்படும்.`;
+
+  const now = new Date();
+  const orderID = `PC2025${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}`;
+  const total = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
+
+  const receiptDiv = document.createElement('div');
+  receiptDiv.style.position = 'absolute';
+  receiptDiv.style.left = '-9999px';
+  receiptDiv.style.width = '600px';
+  receiptDiv.style.padding = '20px';
+  receiptDiv.style.backgroundColor = '#fff';
+  receiptDiv.style.fontFamily = 'Arial, sans-serif';
+  receiptDiv.style.color = '#000';
+  receiptDiv.innerHTML = `
+    <div style="text-align:center;margin-bottom:15px;">
+      <h2 style="margin:0;">PON CRACKERS SHOP</h2>
+      <p style="margin:5px 0;">
+        136, Velachery Rd, MGR Nagar, Pallikaranai, Chennai - 600100<br>
+        Phone: 9884609789
+      </p>
+    </div>
+    <hr>
+    <p><strong>Order ID:</strong> ${orderID}</p>
+    <p><strong>Date:</strong> ${now.toLocaleDateString()} | <strong>Time:</strong> ${now.toLocaleTimeString()}</p>
+    <p><strong>Name:</strong> ${name}<br><strong>Phone:</strong> ${phone}<br><strong>Address:</strong> ${address}</p>
+    <table style="width:100%;border-collapse:collapse;margin-top:15px;" border="1">
+      <thead style="background:#eee;">
+        <tr>
+          <th style="padding:6px;">S.No</th>
+          <th style="padding:6px;">Product</th>
+          <th style="padding:6px;">Qty</th>
+          <th style="padding:6px;">Price</th>
+          <th style="padding:6px;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${cart.map((item, i) => `
+          <tr>
+            <td style="padding:6px;text-align:center;">${i + 1}</td>
+            <td style="padding:6px;">${item.name}</td>
+            <td style="padding:6px;text-align:center;">${item.qty}</td>
+            <td style="padding:6px;text-align:right;">Rs. ${item.price.toFixed(2)}</td>
+            <td style="padding:6px;text-align:right;">Rs. ${(item.qty * item.price).toFixed(2)}</td>
+          </tr>`).join('')}
+      </tbody>
+    </table>
+    <h3 style="text-align:right;margin-top:10px;">Total: Rs. ${total.toFixed(2)}</h3>
+    <hr>
+    <p style="text-align:center;margin-top:10px;">🎇 Thank you for shopping with Pon Crackers! 🎆</p>
+  `;
+
+  document.body.appendChild(receiptDiv);
+
+  try {
+    // Render entire receipt div to canvas
+    const canvas = await html2canvas(receiptDiv, { backgroundColor: "#fff", scale: 2 });
+    document.body.removeChild(receiptDiv);
+
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
+
+    const { jsPDF } = window.jspdf;
+
+    // A4 page size in px at 72 dpi (default unit)
+    const pdfPageWidth = 595.28;  // 210mm
+    const pdfPageHeight = 841.89; // 297mm
+
+    // Calculate scale to fit width
+    const scale = pdfPageWidth / imgWidth;
+
+    // Scaled height of entire image
+    const scaledHeight = imgHeight * scale;
+
+    // Create jsPDF instance with A4 size
+    const pdf = new jsPDF('p', 'pt', 'a4');
+
+    // Number of pages needed
+    const totalPages = Math.ceil(scaledHeight / pdfPageHeight);
+
+    // Create canvas to hold cropped page image slices
+    const pageCanvas = document.createElement('canvas');
+    const pageCtx = pageCanvas.getContext('2d');
+
+    // Canvas width in px (original scale)
+    pageCanvas.width = imgWidth;
+    // Canvas height in px for one page slice (unscaled)
+    pageCanvas.height = pdfPageHeight / scale;
+
+    for (let page = 0; page < totalPages; page++) {
+      const sY = page * pageCanvas.height;
+      // Clear page canvas
+      pageCtx.clearRect(0, 0, pageCanvas.width, pageCanvas.height);
+      // Draw slice from full canvas onto pageCanvas
+      pageCtx.drawImage(
+        canvas,
+        0, sY,               // source x, y
+        imgWidth, pageCanvas.height,  // source width, height
+        0, 0,                // destination x, y
+        imgWidth, pageCanvas.height   // destination width, height
+      );
+
+      // Convert sliced canvas to image
+      const imgData = pageCanvas.toDataURL('image/jpeg', 1.0);
+
+      if (page > 0) pdf.addPage(); // Add new page for every page except first
+
+      // Add image to pdf, scaled to pdfPageWidth and page height
+      pdf.addImage(imgData, 'JPEG', 0, 0, pdfPageWidth, pdfPageHeight);
+    }
+
+    const pdfBlob = pdf.output('blob');
+
+    const formData = new FormData();
+    formData.append("fileUpload", new File([pdfBlob], `${orderID}.pdf`, { type: "application/pdf" }));
+
+    const filestackKey = "A0FgLldEETzWhOf3acumnz";
+    const uploadRes = await fetch(`https://www.filestackapi.com/api/store/S3?key=${filestackKey}`, {
+      method: 'POST',
+      body: formData
+    });
+
+    const uploadJson = await uploadRes.json();
+    if (!uploadJson.url) {
+      alert("Failed to upload receipt PDF");
+      popup.style.display = "none";
+      return;
+    }
+
+    const whatsappMsg = `Hi, I am ${name} ordered crackers from Pon Crackers Shop.\nOrder ID: ${orderID}\nReceipt PDF:\n${uploadJson.url}`;
+    const whatsappURL = `https://wa.me/919884609789?text=${encodeURIComponent(whatsappMsg)}`;
+
+    popupText.innerHTML = `✅ Order placed successfully!<br>வெற்றிகரமாக ஆர்டர் செய்யப்பட்டது!<br>WhatsApp-க்கு வழிமாற்றம் செய்யப்படுகிறது...`;
+
+    setTimeout(() => {
+      window.open(whatsappURL, '_blank');
+      setTimeout(() => {
+        popup.style.display = "none";
+      }, 1500);
+    }, 3000);
+
+    cart.length = 0;
+    updateCart();
+    document.getElementById('name').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('address').value = '';
+    document.getElementById('user-form').style.display = 'none';
+    toggleCart();
+
+  } catch (error) {
+    alert("An error occurred while placing your order. Please try again.");
+    popup.style.display = "none";
+    console.error(error);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function toggleCart() {
+  const cartModal = document.getElementById('cart-modal');
+  const cartToggleBtn = document.getElementById('cart-toggle-btn');
+
+  if (cartModal.classList.contains('show')) {
+    cartModal.classList.remove('show');
+    cartToggleBtn.setAttribute('aria-expanded', 'false');
+    document.getElementById('user-form').style.display = 'none';
+    // Return focus to cart button for accessibility
+    cartToggleBtn.focus();
+  } else {
+    cartModal.classList.add('show');
+    cartToggleBtn.setAttribute('aria-expanded', 'true');
+    updateCart();
+    // Focus inside the modal (on close button)
+    document.getElementById('cart-close-btn').focus();
+  }
+}
+
+// Disable manual typing in quantity inputs
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.product-actions input').forEach(input => {
+    input.addEventListener('keydown', e => e.preventDefault());
+  });
+});
+
+// Initial render
+renderProducts();
+updateCart();
+
+</script>
+
+
+<section id="map-box">
+  <h2>Our Store Location</h2>
+  <iframe
+  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.191529748756!2d80.1964274!3d12.9254835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525c235e5d0415%3A0xf89b211470a97d26!2sSTANDARD%20FIREWORKS%20CRACKERS%20PON%20STORE!5e0!3m2!1sen!2sin!4v1716633300287!5m2!1sen!2sin"
+  width="100%"
+  height="500"
+  style="border:0;"
+  allowfullscreen=""
+  loading="lazy"
+  referrerpolicy="no-referrer-when-downgrade"
+></iframe>
+
+</section>
+<div id="order-wait-popup" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;">
+  <div class="popup-backdrop" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6);"></div>
+  <div class="popup-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px 30px; border-radius: 12px; text-align: center; font-family: sans-serif; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); max-width: 300px;">
+    <div class="loader" style="border: 4px solid #f3f3f3; border-top: 4px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 15px;"></div>
+    <p id="order-popup-text" style="font-size: 15px; line-height: 1.5;">
+      Placing your order...<br>Please wait, you'll be redirected to WhatsApp shortly.
+    </p>
+  </div>
+</div>
+
+
+
+</body>
+</html>
